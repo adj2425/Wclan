@@ -1,0 +1,28 @@
+{
+  "name": "wclan-webhook",
+  "version": "1.0.0",
+  "main": "webhook.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon webhook.js",
+    "start": "node webhook.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mongodb": "^5.9.2",
+    "mongoose": "^8.18.2",
+    "nodemailer": "^7.0.6",
+    "razorpay": "^2.9.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

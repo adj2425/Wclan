@@ -1,0 +1,828 @@
+ <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WCLAN — AI Tools & Vibe Code Workshop (2-day)</title>
+
+  <!-- Replace with your favicon file -->
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+  <style>
+    /* ---------- THEME & RESET ---------- */
+    :root{
+      --bg:#041022;
+      --card:#071226;
+      --glass: rgba(255,255,255,0.03);
+      --accent: #06b6b4;
+      --accent-2: #0ea5a4;
+      --muted:#9aa6b0;
+      --text:#e6eef8;
+      --danger:#ff6b6b;
+      --success:#34d399;
+      --container:1100px;
+      --radius:14px;
+      --shadow: 0 12px 40px rgba(3,8,18,0.6);
+      --glass-2: rgba(255,255,255,0.02);
+      --countdown-bg: linear-gradient(90deg, rgba(255,191,64,0.12), rgba(255,191,64,0.04));
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Helvetica,Arial;background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(8,18,35,0.65), transparent),
+      linear-gradient(180deg,var(--bg) 0%, #07122a 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+    a{color:inherit}
+    img{max-width:100%;display:block}
+    .wrap{max-width:var(--container);margin:0 auto;padding:28px}
+
+    /* ---------- HEADER ---------- */
+    header{position:sticky;top:0;z-index:80;background:rgba(7,12,20,0.6);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;gap:14px;align-items:center}
+    .brand img{height:84px;width:auto;border-radius:8px;box-shadow:0 6px 18px rgba(14,165,164,0.06)}
+    .brand h1{font-size:18px;margin:0;font-weight:700;letter-spacing:0.6px}
+    .navlinks{display:flex;gap:18px;align-items:center}
+    .navlinks a{font-size:14px;color:var(--muted);padding:8px 10px;border-radius:10px}
+    .navlinks a:hover{background:rgba(255,255,255,0.02);color:#fff}
+    .cta-nav{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#062; padding:8px 12px;border-radius:10px;font-weight:800;box-shadow:0 8px 30px rgba(14,165,164,0.08)}
+
+    /* ---------- HERO ---------- */
+    main{padding:34px 0}
+    .hero{display:flex;flex-direction:column;gap:14px;padding:34px;background:linear-gradient(180deg,var(--glass),var(--glass-2));border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.02)}
+    .hero h2{margin:0;font-size:28px}
+    .hero p{margin:0;color:var(--muted);max-width:74%;line-height:1.5}
+
+    .actions{margin-top:14px}
+    .btn{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#012;display:inline-block;padding:12px 18px;border-radius:12px;font-weight:800;border:none;cursor:pointer;box-shadow:0 12px 30px rgba(14,165,164,0.10)}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);font-weight:700}
+    .live-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:linear-gradient(90deg,#ff7a59,#ffb86b);color:#041018;font-weight:800;cursor:default}
+    /* ---------- GRID / CARDS ---------- */
+    section{margin-top:28px}
+    .card{background:var(--card);padding:22px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.02)}
+    .cols{display:grid;grid-template-columns:1fr;gap:20px}
+    @media(min-width:980px){.cols{grid-template-columns:1fr 420px}}
+
+    .video-wrap{position:relative;padding-top:56.25%;background:#000;border-radius:12px;overflow:hidden;box-shadow:inset 0 -6px 30px rgba(0,0,0,0.6)}
+    .video-wrap iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0}
+
+    .promo-img{width:100%;border-radius:10px;object-fit:cover}
+
+    /* ---------- PRICING & COUNTDOWN ---------- */
+    .price-card{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+    .original-price{color:var(--muted);text-decoration:line-through;font-weight:700}
+    .offer-price{font-size:34px;font-weight:900;color:var(--accent)}
+    .offer-badge{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:10px;color:var(--muted);font-weight:700}
+
+    .countdown-hero{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:var(--countdown-bg);border:1px solid rgba(255,160,90,0.08)}
+    .countdown-hero .label{font-size:13px;color:var(--muted);font-weight:800}
+    .countdown-hero .value{font-variant-numeric:tabular-nums;font-weight:900;color:#fff;font-size:22px;padding:6px 14px;border-radius:10px;background:linear-gradient(90deg, rgba(255,160,90,0.12), rgba(255,200,120,0.04));border:1px solid rgba(255,160,90,0.12)}
+
+    /* ---------- FORM ---------- */
+    .checkout form .row{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+    label{font-size:13px;color:var(--muted)}
+    input[type=text],input[type=email],input[type=tel]{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);outline:none}
+    input:focus{box-shadow:0 8px 24px rgba(14,165,164,0.06);border-color:rgba(14,165,164,0.20)}
+
+    .total{font-size:18px;font-weight:800;color:#fff}
+
+    /* ---------- CONTACT BUTTONS ---------- */
+    .contact-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .contact-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--muted);font-weight:700}
+    .contact-btn svg{width:18px;height:18px;opacity:0.95}
+
+    /* ---------- JOIN LINKS & POSTPAY ---------- */
+    #joinLinksArea ul{margin:8px 0 0 18px;color:var(--accent)}
+    #joinLinksArea a{color:var(--accent);font-weight:800}
+    .hidden{display:none}
+    .postpay .video-wrap{height:300px;padding-top:0}
+
+    /* ---------- MODAL ---------- */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,12,0.6);z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
+    .modal.show{opacity:1;pointer-events:auto}
+    .modal-card{background:var(--card);padding:22px;border-radius:12px;max-width:640px;width:92%}
+
+    /* ---------- FOOTER ---------- */
+    footer{margin-top:48px;color:var(--muted);font-size:13px;padding-bottom:60px;text-align:center}
+
+    @media(max-width:720px){
+      .brand img{height:60px}
+      .offer-price{font-size:26px}
+      .countdown-hero .value{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+  <!-- HEADER -->
+     <div class="nav">
+      <div class="brand">
+        <img src="assets/logo.png" alt="WCLAN logo" id="brandLogo" onerror="this.style.display='none'"/>
+      </div>
+
+      <nav class="navlinks" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#course">Course</a>
+        <a class="cta-nav" href="#checkout">Join</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section id="about" class="hero" aria-labelledby="about-heading">
+      <div style="margin-top:8px;color:var(--muted);font-size:13px">
+        Workshop date/time: <span id="workshop-datetime">—</span>
+      </div>
+      <div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <span class="pill">2-day practical • Recording & certificate</span>
+          <div style="margin-left:10px" class="live-btn" title="Live button (demo)">• Live </div>
+        </div>
+
+        <h2 id="about-heading" style="margin-top:12px">AI Tools & Vibe Code — 2-Day Practical Workshop</h2>
+        <p style="margin-top:12px;color:var(--muted)">Day 1 — AI tools, prompts & workflows. Day 2 — Vibe Code: hands-on coding assisted by AI. Recording, slides, certificate & community access included.</p>
+
+        <div style="margin-top:18px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+          <div class="countdown-hero" aria-live="polite">
+            <div class="label">Offer ends in</div>
+            <div id="countdown" class="value">00:00:00</div>
+          </div>
+
+          <div style="margin-left:auto" class="card" aria-hidden="false">
+            <div class="price-row">
+              <div class="original-price">₹499</div>
+              <div class="offer-price">₹99</div>
+              <div class="offer-badge" style="margin-left:8px">Early-bird</div>
+            </div>
+            <div style="margin-top:8px;color:var(--muted);font-size:13px">Workshop date/time: <span id="workshop-datetime">—</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <a class="btn" href="#checkout">Secure your spot</a>
+          <button class="btn secondary" id="learnMore" style="margin-left:12px">Learn more</button>
+        </div>
+      </div>
+
+      <aside style="display:flex;flex-direction:column;gap:12px">
+        <div class="card" style="padding:12px">
+          <h4 style="margin:0 0 8px 0">Course preview</h4>
+          <div class="video-wrap" style="height:220px">
+           <iframe width="560" height="315" src="https://www.youtube.com/embed/EmnRvAC_N2Y?si=c4b6r_WkXXkOakCy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;text-align:center">
+          <div style="font-weight:800">Seats limited</div>
+          <div style="margin-top:8px;color:var(--muted);font-size:13px">RoadMap & Special Guide Notes will be given after class.</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- AGENDA (expanded details for Day 1 & Day 2) -->
+    <section id="agenda" class="card" aria-labelledby="agenda-heading">
+      <h3 id="agenda-heading">2-Day Schedule — What you’ll actually learn</h3>
+      <div style="margin-top:10px;display:grid;gap:12px">
+        <div class="card" style="padding:12px">
+          <h4 style="margin:0 0 8px 0">Day 1 — AI Tools & Productivity</h4>
+          <ul style="margin:8px 0 0 18px;color:var(--muted)">
+            <li><strong>Tool selection:</strong> which free AI tools solve which developer tasks (code completion, linting, refactor, docs).</li>
+            <li><strong>Debug faster:</strong> using AI to triage failing tests, interpret stack traces and craft reproducible bug reports.</li>
+            <li><strong>Prompts & templates:</strong> reproducible prompt patterns for code generation, reviews, and documentation.</li>
+            <li><strong>Workflow integration:</strong> plug AI tools into your IDE, pipelines and PR workflows safely.</li>
+          </ul>
+        </div>
+
+        <div class="card" style="padding:12px">
+          <h4 style="margin:0 0 8px 0">Day 2 — Vibe Code</h4>
+          <ul style="margin:8px 0 0 18px;color:var(--muted)">
+            <li><strong>AI-assisted development:</strong> generate scaffold, wire up APIs and tests with focused prompts.</li>
+            <li><strong>Maintainable patterns:</strong> how to prompt for readable, testable code and avoid hallucinations.</li>
+            <li><strong>Mini-build:</strong> guided hands-on session — ship a small feature using AI + review.</li>
+            <li><strong>Q&A & next steps:</strong> tailored suggestions for your projects and learning path.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURSE PREVIEW -->
+    <section id="course" class="cols card">
+      <aside>
+        <div class="card" style="padding:12px">
+          <h4 style="margin:0 0 8px 0">Promo poster</h4>
+          <img src="assets/promo.png" alt="Workshop poster" class="promo-img" />
+        </div>
+      </aside>
+    </section>
+    </aside>
+     <aside>
+      <div class="card" style="padding:12px;margin-top:12px">
+          <strong style="font-size:16px">What can Join This?</strong>
+          <ul style="margin:8px 0 0 18px;color:var(--muted);font-weight:600">
+            <li>People who are intrested in innovating</li>
+            <li>No prior tech knowledge needed</li>
+            <li>Certificate will be given once after getting done with the workshop</li>
+            <li>Optional MERN bundle (add at checkout)</li>
+          </ul>
+        </div>
+    </aside>
+    <!-- CHECKOUT -->
+    <section id="checkout" class="card checkout" aria-labelledby="checkout-heading">
+      <h3 id="checkout-heading">Checkout — Join the workshop</h3>
+
+      <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+        <div style="flex:1;min-width:280px">
+          <form id="checkoutForm" autocomplete="on">
+            <div class="row">
+              <label for="name">Full name</label>
+              <input id="name" name="name" type="text" required placeholder="Your full name" />
+            </div>
+
+            <div class="row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required placeholder="you@example.com" />
+            </div>
+
+            <div class="row">
+              <label for="phone">Phone (WhatsApp)</label>
+              <input id="phone" name="phone" type="tel" required placeholder="+91xxxxxxxxxx" />
+            </div>
+
+            <div class="row" style="display:flex;align-items:center;gap:8px">
+              <input id="bundle" type="checkbox" />
+              <label for="bundle" style="margin:0">Add MERN bundle (₹199) — includes Telegram group</label>
+            </div>
+
+            <div class="row">
+              <div class="total">Total: <span id="totalAmount">₹99</span></div>
+            </div>
+
+            <div class="row">
+              <button id="payBtn" class="btn" type="button" aria-live="polite">Pay securely</button>
+            </div>
+            <div style="margin-top:10px;color:var(--muted);font-size:13px">
+              Payments are verified server-side. After confirmation you'll receive the WhatsApp link (workshop) or Telegram + bundle (if purchased).
+            </div>
+          </form>
+        </div>
+
+        <div style="width:340px">
+          <div class="card" style="padding:16px">
+            <h4 style="margin-top:0">Offer</h4>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div class="original-price">₹499</div>
+                <div class="offer-price" style="font-size:28px">₹99 <span class="offer-badge" style="margin-left:8px">Offer</span></div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:var(--muted)">Seats limited</div>
+                <div style="margin-top:8px">
+                  <button id="payBtnInline" class="btn">Buy now</button>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:12px;font-size:13px;color:var(--muted)">Includes recording, cheat-sheets, and community access.</div>
+          </div>
+
+          <div id="joinLinksArea" class="card hidden" style="margin-top:12px">
+            <h4 style="margin:0 0 8px 0">Your join links</h4>
+            <div id="linksList" style="font-size:14px;color:var(--muted)"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+         <!-- Earn your certificate area — right after checkout -->
+      <div style="margin-top:18px" class="certificate">
+        <div style="flex:1">
+          <h4 style="margin:0 0 8px 0">Earn your certificate</h4>
+          <p style="margin:0;color:var(--muted)">Complete the workshop and receive a certificate from WCLAN.</p>
+        </div>
+        <div>
+          <img src="assets/certificate_sample.png" alt="Certificate sample (replace)" onerror="this.src='assets/certificate-placeholder.png'" />
+        </div>
+      </div>
+    </section>
+
+
+    <!-- POST-PAY VIDEO & MESSAGE -->
+    <section id="postpay" class="card postpay hidden" aria-hidden="true">
+      <h3 id="postpay-heading">Welcome</h3>
+      <p id="thankYouMessage">Thank you and congratulations,Welcome to Wclan — we’ll skill up ahead.</p>
+      <div style="margin-top:12px" class="video-wrap">
+        <iframe id="postPayVideo" src="" title="Welcome video" allowfullscreen></iframe>
+      </div>
+    </section>
+    
+    <!--  FAQ section to appear -->
+<section id="faq-section" class="card" aria-labelledby="faq-heading" style="margin-top:28px;">
+  <h3 id="faq-heading" style="margin-top:0 0 12px 0">FAQ — Frequently Asked Questions</h3>
+
+  <style>
+    /* FAQ styles (self-contained) */
+    #faq-section .faq-list { display:flex; flex-direction:column; gap:10px; }
+    #faq-section details {
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border: 1px solid rgba(255,255,255,0.03);
+      padding: 12px 14px;
+      border-radius: 10px;
+      transition: transform .14s ease, box-shadow .14s ease;
+      overflow: hidden;
+    }
+    #faq-section details[open] {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      transform: translateY(-2px);
+    }
+    #faq-section summary {
+      list-style: none;
+      cursor: pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      font-weight:700;
+      color:var(--text);
+      padding:0;
+      margin:0;
+      outline: none;
+    }
+    /* hide default marker */
+    #faq-section summary::-webkit-details-marker { display: none; }
+    #faq-section .faq-toggle {
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+    }
+    #faq-section .faq-q {
+      font-size:15px;
+      color:var(--text);
+    }
+    #faq-section .faq-icon {
+      width:38px;
+      height:38px;
+      flex:0 0 38px;
+      border-radius:10px;
+      display:inline-grid;
+      place-items:center;
+      background:rgba(255,255,255,0.02);
+      color:var(--muted);
+      font-weight:800;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+    }
+    /* rotate icon when open */
+    #faq-section details[open] .faq-icon { transform: rotate(45deg); background: linear-gradient(90deg,var(--accent),var(--accent2)); color:#022; }
+
+    #faq-section .faq-body {
+      margin-top:10px;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:14px;
+      max-height:0;
+      opacity:0;
+      transform-origin: top;
+      transition: max-height .28s ease, opacity .18s ease, transform .18s ease;
+      transform: translateY(-6px);
+    }
+    /* expanded body */
+    #faq-section details[open] .faq-body {
+      opacity:1;
+      transform: translateY(0);
+      max-height: 500px; /* large enough for content */
+    }
+
+    /* subtle divider */
+    #faq-section .divider { height:1px; background:rgba(255,255,255,0.02); margin:12px 0; border-radius:2px; }
+
+    /* small responsive tweak */
+    @media (max-width:720px) {
+      #faq-section .faq-icon { width:34px; height:34px; font-size:13px; }
+      #faq-section .faq-q { font-size:14px; }
+    }
+  </style>
+
+  <div class="faq-list" role="list">
+    <details role="listitem" aria-expanded="false">
+      <summary>
+        <div class="faq-toggle" aria-hidden="true">
+          <div class="faq-icon">+</div>
+          <div class="faq-q">What is included in the 2-day workshop?</div>
+        </div>
+        <div aria-hidden="true" style="color:var(--muted);font-size:13px">Duration & resources</div>
+      </summary>
+      <div class="faq-body">
+        <p>
+          The workshop includes two days of live instruction , slides & cheat-sheets,
+          a certificate of completion, and access to a private community for attendees. Day 1 focuses on practical AI tools
+          what are they and how to use use them. Day 2 a session using AI to write/create anything you imagined technically (vibe code).
+        </p>
+      </div>
+    </details>
+
+    <details role="listitem">
+      <summary>
+        <div class="faq-toggle" aria-hidden="true">
+          <div class="faq-icon">?</div>
+          <div class="faq-q">Do I need prior experience with AI or coding?</div>
+        </div>
+        <div aria-hidden="true" style="color:var(--muted);font-size:13px">Skill level</div>
+      </summary>
+      <div class="faq-body">
+        <p>
+          No prior AI experience is required. The workshop is tailored for student developers and early interns.
+          Day 1 introduces useful AI tools and safe prompt patterns. If you know how to write basic code, you'll get the most out of Day 2.
+        </p>
+      </div>
+    </details>
+
+    <details role="listitem">
+      <summary>
+        <div class="faq-toggle" aria-hidden="true">
+          <div class="faq-icon">⏱</div>
+          <div class="faq-q">What are the exact dates & timings?</div>
+        </div>
+        <div aria-hidden="true" style="color:var(--muted);font-size:13px">Schedule</div>
+      </summary>
+      <div class="faq-body">
+        <p>
+          Exact workshop date/time is shown at the top of this page. We recommend checking the timezone shown there.
+          If you prefer specific dates for your cohort, contact us at <a href="mailto:prathiabi2425@gmail.com" style="color:var(--accent)">prathiabi2425@gmail.com</a>.
+        </p>
+      </div>
+    </details>
+
+    <details role="listitem">
+      <summary>
+        <div class="faq-toggle" aria-hidden="true">
+          <div class="faq-icon">₹</div>
+          <div class="faq-q">What payment methods are supported?</div>
+        </div>
+        <div aria-hidden="true" style="color:var(--muted);font-size:13px">Payments</div>
+      </summary>
+      <div class="faq-body">
+        <p>
+          We use Razorpay for payments . After payment you'll receive a verification email and the join links will be shown.
+          For troubleshooting payments, email <a href="mailto:prathiabi2425@gmail.com" style="color:var(--accent)">prathiabi2425@gmail.com</a>.
+        </p>
+      </div>
+    </details>
+
+    <details role="listitem">
+      <summary>
+        <div class="faq-toggle" aria-hidden="true">
+          <div class="faq-icon">📜</div>
+          <div class="faq-q">Will I receive a certificate?</div>
+        </div>
+        <div aria-hidden="true" style="color:var(--muted);font-size:13px">Certificate</div>
+      </summary>
+      <div class="faq-body">
+        <p>
+          Yes — after attending the workshop and completing any required short tasks, you'll receive a certificate of completion..
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <div class="divider" style="margin-top:14px"></div>
+
+  <!-- optional small note -->
+  <div style="font-size:13px;color:var(--muted);margin-top:8px">
+    Can't find your question? Email <a href="mailto:prathiabi2425@gmail.com" style="color:var(--accent)">prathiabi2425@gmail.com</a> and we'll add it here.
+  </div>
+
+  <script>
+    // Enhance keyboard accessibility: toggle with Enter/Space on summary
+    (function(){
+      const section = document.getElementById('faq-section');
+      if (!section) return;
+      const summaries = section.querySelectorAll('summary');
+      summaries.forEach(s => {
+        s.tabIndex = 0;
+        s.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+            e.preventDefault();
+            s.parentElement.open = !s.parentElement.open;
+            // update aria-expanded for screen readers
+            s.parentElement.setAttribute('aria-expanded', s.parentElement.open ? 'true' : 'false');
+          }
+        });
+        // ensure aria-expanded sync
+        s.parentElement.setAttribute('aria-expanded', s.parentElement.open ? 'true' : 'false');
+        s.parentElement.addEventListener('toggle', () => {
+          s.parentElement.setAttribute('aria-expanded', s.parentElement.open ? 'true' : 'false');
+        });
+      });
+    })();
+  </script>
+</section>
+    <!-- CONTACT -->
+    <section id="contact" class="card">
+      <h3>Contact</h3>
+      <p style="color:var(--muted)">Reach us via:</p>
+      <div class="contact-row">
+        <a class="contact-btn" href="mailto:support@wclan.in">
+          <!-- mail icon -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5L12 13l9-4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Email
+        </a>
+
+        <a class="contact-btn" href="https://www.instagram.com/wclan.in?igsh=azA1azQ4ZmFxbzFw&utm_source=qr" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.3"/><path d="M16 11.37a4 4 0 1 1-7.999.001A4 4 0 0 1 16 11.37z" stroke="currentColor" stroke-width="1.3"/><path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Instagram
+        </a>
+
+        <a class="contact-btn" href="https://www.linkedin.com/in/yourhandle" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </section>
+
+    <footer>© WCLAN — Practical AI workshops • support@wclan.in</footer>
+  </main>
+
+  <!-- MODAL (shown after payment verification) -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3 id="modalTitle">Payment confirmed</h3>
+      <p id="modalMessage">Your payment is verified. Join links are below.</p>
+      <div id="modalLinks" style="margin-top:12px"></div>
+      <div style="margin-top:12px;text-align:right"><button id="modalClose" class="btn">Close</button></div>
+    </div>
+  </div>
+
+  <!-- Razorpay checkout (external) -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <script>
+    /****************************************************************
+     * CONFIG - EDIT THESE BEFORE TESTING
+     ****************************************************************/
+    const CONFIG = {
+      RAZORPAY_KEY: 'rzp_test_RLU6Aorp630pon',
+      CREATE_ORDER_ENDPOINT: 'https://1cb9d3a128b1.ngrok-free.app/create-order',
+      PAYMENT_VERIFY_ENDPOINT: 'https://1cb9d3a128b1.ngrok-free.app/payment-verify',
+      ATTENDEE_STATUS_ENDPOINT: 'https://1cb9d3a128b1.ngrok-free.app/attendee-status',
+      OFFER_PRICE: 99,
+      ORIGINAL_PRICE: 499,
+      BUNDLE_PRICE: 199
+    };
+
+    /****************************************************************
+     * DOM refs
+     ****************************************************************/
+    const $ = (sel)=>document.querySelector(sel);
+    const els = {
+      countdown: document.getElementById('countdown'),
+      workshopDatetime: document.getElementById('workshop-datetime'),
+      bundle: document.getElementById('bundle'),
+      totalAmount: document.getElementById('totalAmount'),
+      payBtn: document.getElementById('payBtn'),
+      payBtnInline: document.getElementById('payBtnInline'),
+      modal: document.getElementById('modal'),
+      modalClose: document.getElementById('modalClose'),
+      modalLinks: document.getElementById('modalLinks'),
+      joinLinksArea: document.getElementById('joinLinksArea'),
+      linksList: document.getElementById('linksList'),
+      postpaySection: document.getElementById('postpay'),
+      postPayVideo: document.getElementById('postPayVideo'),
+      thankYouMessage: document.getElementById('thankYouMessage'),
+      promoVideo: document.getElementById('promoVideo'),
+      checkoutForm: document.getElementById('checkoutForm'),
+      name: document.getElementById('name'),
+      email: document.getElementById('email'),
+      phone: document.getElementById('phone')
+    };
+     
+    // You can edit this text anytime for new workshops
+     const MANUAL_WORKSHOP_DATETIME = "4th Oct 2025, 11:00 AM IST";
+
+    /****************************************************************
+     * COUNTDOWN (24-hour persistent)
+     ****************************************************************/
+    const DEADLINE_KEY = 'wclan_workshop_deadline_v4';
+    function getOrCreateDeadline(){
+      const raw = localStorage.getItem(DEADLINE_KEY);
+      if (raw){ const n = Number(raw); if(!Number.isNaN(n) && n > Date.now()) return n; }
+      const deadline = Date.now() + 24*3600*1000;
+      localStorage.setItem(DEADLINE_KEY, String(deadline));
+      return deadline;
+    }
+    function startCountdown(deadlineTs){
+      function tick(){
+        const now = Date.now();
+        const diff = Math.max(0, deadlineTs - now);
+        const sec = Math.floor(diff/1000);
+        const h = Math.floor(sec/3600);
+        const m = Math.floor((sec%3600)/60);
+        const s = sec%60;
+        const text = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+        if (els.countdown) els.countdown.textContent = text;
+        if (diff <= 0) clearInterval(timer);
+      }
+      tick();
+      const timer = setInterval(tick,1000);
+      return timer;
+    }
+    function renderWorkshopDatetime(){
+      if (els.workshopDatetime) els.workshopDatetime.textContent = MANUAL_WORKSHOP_DATETIME;
+    }
+
+    /****************************************************************
+     * Pricing UI
+     ****************************************************************/
+    function calcTotal(){ return CONFIG.OFFER_PRICE + ((els.bundle && els.bundle.checked) ? CONFIG.BUNDLE_PRICE : 0); }
+    function updateTotalUI(){ if (els.totalAmount) els.totalAmount.textContent = '₹' + calcTotal(); }
+
+    /****************************************************************
+     * Small UI helpers
+     ****************************************************************/
+    function showModal(title,message,linksHtml){
+      if (els.modal) {
+        document.getElementById('modalTitle').textContent = title || 'Payment confirmed';
+        document.getElementById('modalMessage').textContent = message || '';
+        if (els.modalLinks) {
+          els.modalLinks.innerHTML = linksHtml || '';
+        }
+        els.modal.classList.add('show');
+        els.modal.setAttribute('aria-hidden','false');
+      }
+    }
+    function hideModal(){ if (els.modal){ els.modal.classList.remove('show'); els.modal.setAttribute('aria-hidden','true'); } }
+    if (els.modalClose) els.modalClose.addEventListener('click', hideModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') hideModal(); });
+
+    function showToast(msg, ms=3500){
+      let t = document.getElementById('wtoast');
+      if (!t){ t = document.createElement('div'); t.id='wtoast'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;z-index:9999'; document.body.appendChild(t); }
+      t.textContent = msg; t.style.opacity = '1';
+      clearTimeout(t._t); t._t = setTimeout(()=> t.style.opacity='0', ms);
+    }
+
+    /****************************************************************
+     * Form validation
+     ****************************************************************/
+    function validateForm(){
+      const name = (els.name.value||'').trim();
+      const email = (els.email.value||'').trim();
+      const phone = (els.phone.value||'').trim();
+      if (!name) return {ok:false,reason:'name'};
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return {ok:false,reason:'email'};
+      if (!phone) return {ok:false,reason:'phone'};
+      return {ok:true,data:{name,email,phone,bundle:(els.bundle && els.bundle.checked)}};
+    }
+
+    /****************************************************************
+     * Server polling for verification
+     ****************************************************************/
+    function pollAttendeeStatus(paymentId, timeoutMs=2*60*1000, intervalMs=3000){
+      if (!paymentId) return Promise.resolve(null);
+      const start = Date.now();
+      return new Promise((resolve) => {
+        (function loop(){
+          if (Date.now() - start >= timeoutMs){ resolve(null); return; }
+          fetch(CONFIG.ATTENDEE_STATUS_ENDPOINT + '/' + encodeURIComponent(paymentId))
+            .then(res => res.ok ? res.json() : res.text().then(()=>null))
+            .then(json => {
+              if (json && json.verified) resolve(json);
+              else setTimeout(loop, intervalMs);
+            })
+            .catch(()=> setTimeout(loop, intervalMs));
+        })();
+      });
+    }
+
+    /****************************************************************
+     * Create order on server then open Razorpay checkout
+     ****************************************************************/
+    async function createOrderAndOpenCheckout(totalINR, name, email, phone, bundle){
+      try {
+        // 1. create order server-side (recommended)
+        const amountPaise = Math.round(totalINR * 100);
+        const res = await fetch(CONFIG.CREATE_ORDER_ENDPOINT, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({amount: amountPaise, name, email, phone, bundle})
+        });
+        const json = await res.json();
+        if (!json || !json.ok || !json.order){ showToast('Could not create order'); console.warn('create order failed', json); return; }
+        const order = json.order;
+
+        // 2. open razorpay checkout with order_id (server-authoritative)
+        const options = {
+          key: CONFIG.RAZORPAY_KEY,
+          amount: order.amount,
+          currency: order.currency,
+          name: 'WCLAN 2-day workshop',
+          description: bundle ? 'Workshop + MERN bundle' : 'Workshop',
+          order_id: order.id,
+          prefill: { name, email, contact: phone },
+          notes: { bundle: bundle ? 'mern' : 'workshop-only' },
+          handler: async function(response){
+            // show immediate UX that payment was received (we'll confirm with server next)
+            showToast('Payment received. Verifying...', 6000);
+
+            // send non-authoritative client report (server uses webhooks primarily)
+            try {
+              await fetch(CONFIG.PAYMENT_VERIFY_ENDPOINT, {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(response)
+              }).catch(()=>{});
+            } catch(e){}
+
+            // poll server for verification and join-links
+            const pid = response.razorpay_payment_id;
+            const status = await pollAttendeeStatus(pid, 2*60*1000, 3500);
+            if (status && status.verified){
+              // Build links html
+              const links = status.links || {};
+              let html = '<ul style="margin:8px 0 0 18px">';
+              if (links.whatsapp) html += '<li>WhatsApp: <a href="'+links.whatsapp+'" target="_blank" rel="noopener">'+links.whatsapp+'</a></li>';
+              if (links.telegram) html += '<li>Telegram: <a href="'+links.telegram+'" target="_blank" rel="noopener">'+links.telegram+'</a></li>';
+              if (links.download) html += '<li>Download: <a href="'+links.download+'" target="_blank" rel="noopener">Download bundle</a></li>';
+              html += '</ul>';
+
+              // show modal with links and populate join section
+              showModal('Payment confirmed','Your payment is verified. Join links are below:', html);
+              if (els.joinLinksArea && els.linksList){
+                els.linksList.innerHTML = html;
+                els.joinLinksArea.classList.remove('hidden');
+              }
+              // show post-pay video and message
+              if (els.postpaySection){
+                els.postPayVideo.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0';
+                els.postpaySection.classList.remove('hidden');
+                els.postpaySection.setAttribute('aria-hidden','false');
+                if (els.thankYouMessage) els.thankYouMessage.textContent = 'Thank you and Congratulations on joining the workshop — we’ll skill up ahead.';
+              }
+            } else {
+              // if no verification in time, alert and let server email links
+              showModal('Payment received','We received your payment. Verification is in progress—links will be emailed shortly.');
+            }
+          },
+          modal: {
+            ondismiss: function(){ /* optional: user closed checkout */ }
+          }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+      } catch (err) {
+        console.error('createOrderAndOpenCheckout error', err);
+        showToast('Payment initialization failed. Try again.');
+      }
+    }
+
+    /****************************************************************
+     * Wire up UI interactions
+     ****************************************************************/
+    function wireSmoothScroll(){
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', (ev)=>{
+          const href = a.getAttribute('href');
+          if (href && href.length>1){
+            ev.preventDefault();
+            const el = document.querySelector(href);
+            if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
+          }
+        });
+      });
+    }
+
+    function init(){
+      // countdown & datetime
+      const deadline = getOrCreateDeadline();
+      startCountdown(deadline);
+      renderWorkshopDatetime(); // no argument now, uses manual text
+
+      // pricing
+      if (els.bundle) els.bundle.addEventListener('change', updateTotalUI);
+      updateTotalUI();
+
+      // pay buttons
+      const payHandler = async ()=>{
+        const v = validateForm();
+        if (!v.ok){
+          if (v.reason === 'name') return showToast('Please enter your name');
+          if (v.reason === 'email') return showToast('Please enter a valid email');
+          if (v.reason === 'phone') return showToast('Please enter a phone number');
+        }
+        const data = v.data;
+        const total = calcTotal();
+        await createOrderAndOpenCheckout(total, data.name, data.email, data.phone, data.bundle);
+      };
+
+      if (els.payBtn) els.payBtn.addEventListener('click', payHandler);
+      if (els.payBtnInline) els.payBtnInline.addEventListener('click', payHandler);
+
+      // modal close handled earlier
+      wireSmoothScroll();
+    }
+
+    // Run init when ready
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  </script>
+</body>
+</html>
